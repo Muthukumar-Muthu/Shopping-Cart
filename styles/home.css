@@ -1,0 +1,173 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+    width: 100px;
+}
+
+header {
+    background-color: aqua;
+    height: 10vh;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo * {
+    padding: 2px 5px;
+}
+
+header>div {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.sort {
+    padding: 10px 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: burlywood;
+}
+
+.products {
+    background-color: lightgreen;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem 1rem;
+    padding: 2px;
+}
+
+.single-products {
+    background-color: lightpink;
+    display: grid;
+    grid-template-areas: "title title" "img cateogry" "img rate" "img count" "img price" "img add";
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.single-products * {
+    padding: 5px;
+    text-align: center;
+}
+
+.single-products .img {
+    display: grid;
+    place-items: center;
+    padding: 0;
+    grid-area: img;
+    /* background-color: lightseagreen; */
+}
+
+.single-products .title {
+    grid-area: title;
+}
+
+.single-products .price {
+    grid-area: price;
+}
+
+.single-products .add {
+    grid-area: add;
+}
+
+.single-products button {
+    height: 100%;
+    width: 100%;
+}
+
+.single-products .rate {
+    grid-area: rate;
+}
+
+.single-products .count {
+    grid-area: count;
+}
+
+.single-products .cateogry {
+    grid-area: cateogry;
+}
+
+.cart-container {
+    background-color: lightgray;
+    margin-block: 10px;
+    padding: 10px;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    position: absolute;
+    /* here */
+    z-index: -10;
+    left: 10px;
+    right: 10px;
+    top: 0;
+}
+
+.close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.middle {
+    position: absolute;
+    /* here */
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: darksalmon;
+    z-index: -10;
+}
+
+.cart-container .title {
+    padding: 5px;
+}
+
+.cart-products {
+    display: flex;
+    flex-direction: column;
+    background-color: lightskyblue;
+    padding: 20px;
+}
+
+.single-cart-product {
+    display: grid;
+    grid-template-areas: "cartimage carttitle" "cartimage cartquantity" "cartimage cartcost";
+    margin: 5px;
+    background-color: red;
+}
+
+.single-cart-product .img {
+    grid-area: cartimage;
+}
+
+.single-cart-product .title {
+    grid-area: carttitle;
+}
+
+.single-cart-product .quantity {
+    grid-area: cartquantity;
+}
+
+.single-cart-product .total-cost {
+    grid-area: cartcost;
+}
