@@ -91,7 +91,7 @@ header>div {
 
 .single-products button {
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .single-products .rate {
@@ -107,13 +107,13 @@ header>div {
 }
 
 .cart-container {
-    background-color: lightgray;
+    background-color: rgb(255, 1, 1);
     margin-block: 10px;
     padding: 10px;
     text-align: center;
     display: grid;
     place-items: center;
-    position: absolute;
+    /* position: absolute; */
     /* here */
     z-index: -10;
     left: 10px;
@@ -122,8 +122,8 @@ header>div {
 }
 
 .close {
-    position: absolute;
-    right: 5px;
+    /* position: absolute;
+    right: 5px; */
     top: 5px;
 }
 

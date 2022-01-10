@@ -19,7 +19,7 @@
         </div>
 
         <div>Products</div>
-        <div id="cart">cart</div>
+        <div id=""><a href="#cart">cart</a></div>
 
         <div class="user">
             <i class="fas fa-user"></i>
@@ -27,17 +27,17 @@
     </header>
     <section class="sort">
         <div class="greet">Welcome <span id="name"></span></div>
-        <div class="search">
-            <input type="text" name="" id="search" placeholder="search..">
+        <div class="searchInput">
+            <input type="search" name="" id="search" placeholder="search..">
         </div>
         <div class="sort">
             <label for="sort">Sort by</label>
             <select name="sort" id="sort">
-                <option value="categories">categories</option>
+
                 <option value="Price">Price</option>
                 <option value="rating">rating</option>
                 <option value="stocks">remaining stocks</option>
-                <option value="name">Name</option>
+
             </select>
         </div>
     </section>
@@ -45,7 +45,8 @@
 
     </section>
     <div class="middle"></div>
-    <section class="cart-container">
+
+    <section id="cart" class="cart-container">
         <div class="title">CART</div>
         <div class="close">
             <i class="fas fa-trash">Remove</i>
