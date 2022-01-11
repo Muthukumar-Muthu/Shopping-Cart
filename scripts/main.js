@@ -1,50 +1,62 @@
 //https://medium.com/codex/global-variables-and-javascript-modules-ce674a869164
-let cartArray = [];
+
+//      <------------variable declartions-------->
+
 const closeCart = document.querySelector(".close");
 const cardContainer = document.querySelector(".cart-container");
 const middle = document.querySelector(".middle");
 const cartButton = document.querySelector("#cart");
+const products = document.querySelector(".products");
+const dropdown = document.querySelector("#sort");
+const searchInput = document.querySelector("#search");
+const user = document.querySelector(".user");
+const userId = localStorage.getItem("id"); //for this time using id from a local storage.
+const sectionProducts = document.querySelector(".products");
+const cartProducts = document.querySelector(".cart-products");
 let fetchUserObject = {}; // user object from fetch
 let fetchUserCart = {}; // user cart from fetch
 let wholeProduct = []; // array of avaible product object
-/* closeCart.addEventListener("click", () => {
-    //CLOSE CART
-    console.log("cart close");
-    document.body.style.zIndex = "10";
-    cardContainer.style.zIndex = "-10";
-    middle.style.zIndex = "-10";
-});
+let cartArray = [];
+let userCart = {};
 
-cartButton.addEventListener("click", () => {
-    //OPEN CART
+class cart {
+    constructor(userId, productArray) {
+        this.userId = userId;
+        this.productArray = productArray;
+        this.totalCost = 0;
+        this.updateTotalCost();
+    }
+    updateTotalCost = () => {
+        let cost = 0;
+        this.productArray.forEach((element) => {
+            cost = cost + element.productObject.price * element.quantity;
+        });
+        this.totalCost = getReduced(cost);
+    };
+}
 
-    console.log("cart open");
-    cardContainer.style.zIndex = "10";
-    middle.style.zIndex = "5";
-});
-*/
+// <------- function definition ----------->
 
-const userId = localStorage.getItem("id"); //for this time using id from a local storage.
-console.log(`user Id ${userId}`);
 const getUserDetails = async(userId) => {
     // for get the user and cart object for particular id
-    console.log("getting user details for id - ", userId);
+    //   console.log("getting user details for id - ", userId);
     const userResponse = await fetch(`https://fakestoreapi.com/users/${userId}`);
     console.log("got userResponse");
     const userCartResponse = await fetch(
         `https://fakestoreapi.com/carts/${userId}`
     );
-    console.log("got cartResponse");
+    //   console.log("got cartResponse");
     const userResponseJson = await userResponse.json();
     const userCartResponseJson = await userCartResponse.json();
-    console.log("user Object", userResponseJson);
-    console.log("userCart Object", userCartResponseJson);
+    //   console.log("user Object", userResponseJson);
+    //   console.log("userCart Object", userCartResponseJson);
     return { userResponseJson, userCartResponseJson };
 };
 
 // function gets a number returns float with 2 percision with number typeof
 //round off the price product
 const getReduced = (num) => +Number.parseFloat(num).toFixed(2);
+
 // function gets a product object {id,quantity} array and return product object {id,cost,title,catergory etc..} array
 const getProductDetails = async(array) => {
     let i = 0;
@@ -64,32 +76,9 @@ const getProductDetails = async(array) => {
         object.productTotalCost = getReduced(element.price * object.quantity);
         return object;
     });
-    console.log("product object", mappedJson);
+    //console.log("product object", mappedJson);
     return mappedJson;
 };
-
-//TODO: create cart
-class cart {
-    constructor(userId, productArray) {
-        this.userId = userId;
-        this.productArray = productArray;
-        this.totalCost = 0;
-        this.updateTotalCost();
-    }
-    updateTotalCost = () => {
-        let cost = 0;
-        this.productArray.forEach((element) => {
-            cost = cost + element.productObject.price * element.quantity;
-        });
-        this.totalCost = getReduced(cost);
-    };
-}
-
-let userCart = {};
-
-//build cart
-const sectionProducts = document.querySelector(".products");
-const cartProducts = document.querySelector(".cart-products");
 
 const buildCart = (cartObject) => {
     console.log("building cart");
@@ -117,15 +106,15 @@ const buildCart = (cartObject) => {
         div.innerHTML = content;
         cartProducts.appendChild(div);
     });
-    console.log(cartObject.totalCost);
-    console.log("done cart building");
+    //   console.log(cartObject.totalCost);
+    //   console.log("done cart building");
 };
 
 const getProducts = async() => {
     console.log("getting all avaiable products from the API");
     const response = await fetch("https://fakestoreapi.com/products");
     const products = await response.json();
-    console.log("got all products");
+    //   console.log("got all products");
     wholeProduct = [...products];
     return products;
 };
@@ -142,32 +131,32 @@ const getProductObject = (id) => {
     //console.log(wholeProduct);
 };
 const add = (object) => {
-    console.log("adding product");
+    //   console.log("adding product");
     let add = false;
     const selectedProduct = getProductObject(object.id);
     // console.log(selectedProduct);
     console.log(userCart.productArray);
     userCart.productArray.forEach((element) => {
         if (element.productObject.id == selectedProduct.id) {
-            console.log("element to be increamented", element, element.quantity);
+            //   console.log("element to be increamented", element, element.quantity);
             const inc = element.quantity;
             element.quantity = inc + 1;
             element.productTotalCost = getReduced(
                 element.quantity * element.productObject.price
             );
             add = true;
-            console.log(element.quantity, "increamented");
+            //   console.log(element.quantity, "increamented");
         }
     });
     if (add == false) {
-        console.log("not presented", selectedProduct);
+        // console.log("not presented", selectedProduct);
         const object = {};
         object.productObject = selectedProduct;
         object.quantity = 1;
         object.productTotalCost = selectedProduct.price;
         userCart.productArray.push(object);
     }
-    console.log("product array", userCart.productArray);
+    //   console.log("product array", userCart.productArray);
     buildCart(userCart);
 };
 const sub = (object) => {
@@ -179,7 +168,7 @@ const sub = (object) => {
     userCart.productArray.forEach((element) => {
         if (element.productObject.id == selectedProduct.id) {
             if (element.quantity > 1) {
-                console.log("element to be decreamented", element, element.quantity);
+                // console.log("element to be decreamented", element, element.quantity);
                 const des = element.quantity;
                 element.quantity = des - 1;
                 element.productTotalCost = getReduced(
@@ -198,16 +187,50 @@ const sub = (object) => {
         if (sub === false) console.log("the object is not presented");
     });
 
-    console.log("product array", userCart.productArray);
+    //   console.log("product array", userCart.productArray);
     buildCart(userCart);
 };
 
 function setName() {
-    console.log("setting name");
+    //   console.log("setting name");
     const Username = `${fetchUserObject.name.firstname} ${fetchUserObject.name.lastname}`;
     document.querySelector("#name").innerHTML = Username;
 }
-//execution stage
+
+//sorting - sort function will collect the .single-products and sort based on the sort.value
+const sort = (value) => {
+    value = value.toLowerCase();
+    //   console.log(value);
+    const productsHtml = [...document.querySelectorAll(".single-products")];
+    const productsId = productsHtml.map((value) => value.id);
+    const localWholeProduct = productsId.map((value) => getProductObject(value));
+    //   console.log(localWholeProduct);
+    if (value == "rating") {
+        localWholeProduct.sort((firstElement, secondElement) => {
+            return secondElement.rating.rate - firstElement.rating.rate;
+        });
+    } else if (value == "stocks") {
+        localWholeProduct.sort((firstElement, secondElement) => {
+            return secondElement.rating.count - firstElement.rating.count;
+        });
+    } else if (value == "price") {
+        localWholeProduct.sort((firstElement, secondElement) => {
+            return secondElement.price - firstElement.price;
+        });
+    }
+    buildProducts(localWholeProduct);
+};
+
+// sorting event listener
+const search = () => {
+    const value = searchInput.value;
+    const regex = new RegExp(value, "ig");
+    const array = wholeProduct.filter((value) => regex.test(value.title));
+    buildProducts(array);
+};
+
+// <-----execution stage------->
+// console.log(`user Id ${userId}`);
 getUserDetails(userId)
     .then((response) => {
         fetchUserObject = {...response.userResponseJson };
@@ -220,7 +243,7 @@ getUserDetails(userId)
     .then((response) => {
         getProductDetails(response.products)
             .then((productObjectArray) => {
-                console.log(productObjectArray); //TODO: create cart object with products
+                console.log(productObjectArray); // create cart object with products
                 userCart = new cart(fetchUserCart.id, productObjectArray);
                 console.log("userCart", userCart);
                 buildCart(userCart);
@@ -264,9 +287,24 @@ getProducts().then((products) => {
     buildProducts(products);
 });
 
-//TODO: find a way to update the cartarray with add or sub action?
+// <------- event listners ----------->
+/* closeCart.addEventListener("click", () => {
+    //CLOSE CART
+    console.log("cart close");
+    document.body.style.zIndex = "10";
+    cardContainer.style.zIndex = "-10";
+    middle.style.zIndex = "-10";
+});
 
-const products = document.querySelector(".products");
+cartButton.addEventListener("click", () => {
+    //OPEN CART
+
+    console.log("cart open");
+    cardContainer.style.zIndex = "10";
+    middle.style.zIndex = "5";
+});
+*/
+
 products.addEventListener("click", (e) => {
     if (e.target.className == "add") {
         add(e.target.parentElement.parentElement);
@@ -275,52 +313,16 @@ products.addEventListener("click", (e) => {
         sub(e.target.parentElement.parentElement);
     }
     userCart.updateTotalCost();
-    console.log(userCart.totalCost);
+    //   console.log(userCart.totalCost);
 });
 
-//sorting
-const sort = (value) => {
-    value = value.toLowerCase();
-    console.log(value);
-
-    const productsHtml = [...document.querySelectorAll(".single-products")];
-
-    const productsId = productsHtml.map((value) => value.id);
-    const localWholeProduct = productsId.map((value) => getProductObject(value));
-    console.log(localWholeProduct);
-    if (value == "rating") {
-        localWholeProduct.sort((firstElement, secondElement) => {
-            return secondElement.rating.rate - firstElement.rating.rate;
-        });
-    } else if (value == "stocks") {
-        localWholeProduct.sort((firstElement, secondElement) => {
-            return secondElement.rating.count - firstElement.rating.count;
-        });
-    } else if (value == "price") {
-        localWholeProduct.sort((firstElement, secondElement) => {
-            return secondElement.price - firstElement.price;
-        });
-    }
-
-    buildProducts(localWholeProduct);
-};
-
-// sorting event listner
-const dropdown = document.querySelector("#sort");
 dropdown.addEventListener("change", () => {
     sort(dropdown.value);
 });
-const search = () => {
-    const value = searchInput.value;
-    const regex = new RegExp(value, "ig");
-    const array = wholeProduct.filter((value) => regex.test(value.title));
-    buildProducts(array);
-};
 
-const searchInput = document.querySelector("#search");
-searchInput.addEventListener("keyup", search);
+searchInput.addEventListener("keyup", search); //TODO: CHANGE this function like sorting event
 
-const user = document.querySelector(".user");
 user.addEventListener("click", () => {
     console.log(fetchUserObject);
 });
+//TODO: add total cart cost to cart object in html
