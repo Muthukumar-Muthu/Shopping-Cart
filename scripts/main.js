@@ -84,6 +84,7 @@ const buildCart = (cartObject) => {
     console.log("building cart");
     cartProducts.innerHTML = "";
     cartObject.productArray.forEach((object) => {
+        console.log(object);
         const element = object.productObject;
 
         const div = document.createElement("div");
@@ -257,23 +258,23 @@ const buildProducts = (products) => {
     sectionProducts.innerHTML = "";
     products.forEach((product) => {
         const content = `
-                    <div class="title">${product.title}</div>
-                    <div class="price">Price $ ${product.price}</div>
+                    <div class="title product-item">${product.title}</div>
+                    <div class="price product-item">Price - $ ${product.price}</div>
                     <!-- <div class="description">${product.description}</div> -->
-                    <div class="cateogry">
+                    <div class="cateogry product-item">
                        ${product.category}
                     </div>
-                    <div class="img">
+                    <div class="img product-item">
                         <img src="${product.image}" alt="">
                     </div>
 
-                    <div class="rate">Rate - ${product.rating.rate}</div>
-                    <div class="count">Count -  ${product.rating.count}</div>
-                    <div class="add">
-                        <button class="add">Add to cart</button>
-                         <button class="subract">subract</button>
-                    </div>
+                    <div class="rate product-item">Rate - ${product.rating.rate}</div>
+                    <div class="count product-item">Count -  ${product.rating.count}</div>
+                    <div class="add-button">
+               Add to cart
+            </div>
                 `;
+
         const div = document.createElement("div");
         div.className = "single-products";
         div.setAttribute("id", product.id);
@@ -306,8 +307,9 @@ cartButton.addEventListener("click", () => {
 */
 
 products.addEventListener("click", (e) => {
-    if (e.target.className == "add") {
-        add(e.target.parentElement.parentElement);
+    console.log(e.target);
+    if (e.target.className == "add-button") {
+        add(e.target.parentElement);
     }
     if (e.target.className == "subract") {
         sub(e.target.parentElement.parentElement);

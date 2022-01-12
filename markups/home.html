@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMAZAAAN</title>
+    <title>Comfy Shop</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="..\styles\home.css">
@@ -13,38 +13,39 @@
 
 <body>
     <header>
-        <div class="logo">
-            Ammazon
-            <img src="..\images\logo.svg" alt="">
-        </div>
-
-        <div>Products</div>
-        <div id=""><a href="#cart">cart</a></div>
-
         <div class="user">
             <i class="fas fa-user"></i>
         </div>
+        <div class="logo">
+            <span>COMFY</span><span>SHOP</span>
+        </div>
+
+
+        <div id="cart-logo"><a href="#cart">cart</a></div>
+
+
     </header>
     <section class="sort">
-        <div class="greet">Welcome <span id="name"></span></div>
-        <div class="searchInput">
-            <input type="search" name="" id="search" placeholder="search..">
-        </div>
-        <div class="sort">
-            <label for="sort">Sort by</label>
-            <select name="sort" id="sort">
-
-                <option value="Price">Price</option>
-                <option value="rating">rating</option>
-                <option value="stocks">remaining stocks</option>
-
-            </select>
+        <div class="greet">Welcome <span id="name">david morrison</span></div>
+        <div id="search-sort">
+            <div class="searchInput">
+                <input type="search" autocomplete="off" name="" id="search" placeholder="search..">
+            </div>
+            <div class="sort">
+                <label for="sort">Sort by</label>
+                <select name="sort" id="sort">
+                    <option value="default" selected>...</option>
+                    <option value="Price">Price</option>
+                    <option value="rating">Rating</option>
+                    <option value="stocks">Remaining stocks</option>
+                </select>
+            </div>
         </div>
     </section>
     <section class="products">
 
     </section>
-    <div class="middle"></div>
+    <!-- <div class="middle"></div> -->
 
     <section id="cart" class="cart-container">
         <div class="title">CART</div>
@@ -57,6 +58,8 @@
     </section>
 
     <script type="module" src="..\scripts\main.js"></script>
+
+
 </body>
 
 </html>
