@@ -12,58 +12,59 @@
 </head>
 
 <body>
-    <main class="main">
-        <header>
-            <div class="user">
-                <i class="fas fa-user"></i>
-            </div>
-            <div class="logo">
-                <span>COMFY</span><span>SHOP</span>
-            </div>
-            <div id="cart-logo"><a>cart</a></div>
-        </header>
-        <section class="sort">
-            <div class="greet">Welcome <span id="name"></span></div>
-            <div id="search-sort">
-                <div class="searchInput">
-                    <input type="search" autocomplete="off" name="" id="search" placeholder="search..">
+    <div class="wrapper">
+        <main class="main">
+            <header>
+                <div class="user">
+                    <i class="fas fa-user"></i>
                 </div>
-                <div class="sort">
-                    <label for="sort">Sort by</label>
-                    <select name="sort" id="sort">
-                        <option value="default" selected>...</option>
-                        <option value="Price">Price</option>
-                        <option value="rating">Rating</option>
-                        <option value="stocks">Remaining stocks</option>
-                    </select>
+                <div class="logo">
+                    <span>COMFY</span><span>SHOP</span>
+                </div>
+                <div id="cart-logo"><a>cart</a></div>
+            </header>
+            <section class="sort">
+                <div class="greet">Welcome <span id="name"></span></div>
+                <div id="search-sort">
+                    <div class="searchInput">
+                        <input type="search" autocomplete="off" name="" id="search" placeholder="search..">
+                    </div>
+                    <div class="sort">
+                        <label for="sort">Sort by</label>
+                        <select name="sort" id="sort">
+                            <option value="default" selected>...</option>
+                            <option value="Price">Price</option>
+                            <option value="rating">Rating</option>
+                            <option value="stocks">Remaining stocks</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            <section class="products">
+            </section>
+        </main>
+        <div id="overlay"></div>
+        <section id="cart" class="cart-container">
+            <div>
+                <div id="cart-title">
+                    <div class="close">
+                        <i class="far fa-window-close"></i>
+                    </div>
+                    <div class="title">CART</div>
+                </div>
+                <div class="cart-products">
                 </div>
             </div>
         </section>
-        <section class="products">
-        </section>
-    </main>
-    <div id="overlay"></div>
-    <section id="cart" class="cart-container">
-        <div>
-            <div id="cart-title">
-                <div class="close">
-                    <i class="far fa-window-close"></i>
+        <aside class="user">
+            <div id="user-title">
+                <div class="close-user">
+                    <i class="fas fa-arrow-left"></i><span>Close</span>
                 </div>
-                <div class="title">CART</div>
+                <div class="title">USER INFORMATION</div>
             </div>
-            <div class="cart-products">
-            </div>
-        </div>
-    </section>
-    <aside class="user">
-        <div id="user-title">
-            <div class="close-user">
-                <i class="fas fa-arrow-left"></i><span>Close</span>
-            </div>
-            <div class="title">USER INFORMATION</div>
-        </div>
-
-    </aside>
+        </aside>
+    </div>
 
     <script type="module" src="..\scripts\main.js"></script>
 

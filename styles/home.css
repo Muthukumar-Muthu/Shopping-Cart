@@ -15,6 +15,11 @@ body {
     font-family: "Montserrat", sans-serif;
     color: black;
     transition: all 0.2s linear;
+}
+
+.wrapper {
+    position: relative;
+    z-index: 1;
     overflow-x: hidden;
 }
 
@@ -421,6 +426,9 @@ input[type="number"] {
 }
 
 @media (max-width: 650px) and (min-width: 551px) {
+    body {
+        overflow-x: hidden;
+    }
     #name {
         display: flex;
         flex-direction: row;
@@ -431,6 +439,9 @@ input[type="number"] {
 }
 
 @media (max-width: 700px) {
+    body {
+        overflow-x: hidden;
+    }
     .cart-container {
         width: 90%;
         min-width: 0;
@@ -440,6 +451,9 @@ input[type="number"] {
 }
 
 @media (max-width: 550px) {
+    body {
+        overflow-x: hidden;
+    }
     .logo {
         letter-spacing: 3px;
     }
