@@ -319,6 +319,8 @@ cartLogo.addEventListener("click", (e) => {
 closeCart.addEventListener("click", () => {
     cartContainer.style.transform = `translateX(1000px)`;
     toggleOverlay();
+    const overlay = document.querySelector("#overlay");
+    overlay.style.height = `0px`;
 });
 cartContainer.addEventListener("click", (e) => {
     if (e.target.classList.contains("plus"))
@@ -328,6 +330,7 @@ cartContainer.addEventListener("click", (e) => {
     //userCart.updateTotalCost();
 });
 products.addEventListener("click", (e) => {
+    console.log(e.target, "here");
     if (e.target.classList.contains("add-button")) {
         add(e.target.parentElement);
         // userCart.updateTotalCost();
@@ -350,6 +353,8 @@ closeUser.addEventListener("click", () => {
     console.log("close user");
     userDetails.style.transform = `translateX(-1000px)`;
     toggleOverlay();
+    const overlay = document.querySelector("#overlay");
+    overlay.style.height = `0px`;
 });
 
 //add total cart cost to cart object in html
