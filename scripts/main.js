@@ -2,17 +2,20 @@
 
 //      <------------variable declartions-------->
 
-const closeCart = document.querySelector(".close");
-const cardContainer = document.querySelector(".cart-container");
+const cartContainer = document.querySelector(".cart-container");
 const middle = document.querySelector(".middle");
 const cartButton = document.querySelector("#cart");
 const products = document.querySelector(".products");
 const dropdown = document.querySelector("#sort");
 const searchInput = document.querySelector("#search");
-const user = document.querySelector(".user");
 const userId = localStorage.getItem("id"); //for this time using id from a local storage.
 const sectionProducts = document.querySelector(".products");
 const cartProducts = document.querySelector(".cart-products");
+const cartLogo = document.querySelector("#cart-logo");
+const closeCart = document.querySelector(".close");
+const userButton = document.querySelector("div.user");
+const userDetails = document.querySelector("aside.user");
+const closeUser = document.querySelector(".close-user");
 let fetchUserObject = {}; // user object from fetch
 let fetchUserCart = {}; // user cart from fetch
 let wholeProduct = []; // array of avaible product object
@@ -41,7 +44,7 @@ const getUserDetails = async(userId) => {
     // for get the user and cart object for particular id
     //   console.log("getting user details for id - ", userId);
     const userResponse = await fetch(`https://fakestoreapi.com/users/${userId}`);
-    console.log("got userResponse");
+    // console.log("got userResponse");
     const userCartResponse = await fetch(
         `https://fakestoreapi.com/carts/${userId}`
     );
@@ -81,10 +84,13 @@ const getProductDetails = async(array) => {
 };
 
 const buildCart = (cartObject) => {
-    console.log("building cart");
+    console.log(cartObject);
+
+    // console.log("muthu", cartObject);
+    // console.log("building cart");
     cartProducts.innerHTML = "";
     cartObject.productArray.forEach((object) => {
-        console.log(object);
+        //   console.log(object);
         const element = object.productObject;
 
         const div = document.createElement("div");
@@ -97,22 +103,32 @@ const buildCart = (cartObject) => {
                            ${element.title}
                         </div>
                         <div class="quantity">
-                            Quantity - ${object.quantity}
+                            
+                             <span>Quantity -</span><span>
+                <i class="fas fa-plus plus"></i>
+                <input type="number" name="" id="" value=${object.quantity}>
+                <i class="fas fa-minus subract"></i>
+            </span>
                         </div>
                         <div class="total-cost">
                             Cost - $  ${object.productTotalCost}
                         </div>
                         `;
+
         div.setAttribute("id", element.id);
         div.innerHTML = content;
         cartProducts.appendChild(div);
     });
+    const div = document.createElement("div");
+    div.id = "total-cost";
+    div.innerText = `Total Cost - $${cartObject.totalCost}`;
+    cartProducts.appendChild(div);
     //   console.log(cartObject.totalCost);
     //   console.log("done cart building");
 };
 
 const getProducts = async() => {
-    console.log("getting all avaiable products from the API");
+    //console.log("getting all avaiable products from the API");
     const response = await fetch("https://fakestoreapi.com/products");
     const products = await response.json();
     //   console.log("got all products");
@@ -136,7 +152,7 @@ const add = (object) => {
     let add = false;
     const selectedProduct = getProductObject(object.id);
     // console.log(selectedProduct);
-    console.log(userCart.productArray);
+    // console.log(userCart.productArray);
     userCart.productArray.forEach((element) => {
         if (element.productObject.id == selectedProduct.id) {
             //   console.log("element to be increamented", element, element.quantity);
@@ -158,6 +174,7 @@ const add = (object) => {
         userCart.productArray.push(object);
     }
     //   console.log("product array", userCart.productArray);
+    userCart.updateTotalCost();
     buildCart(userCart);
 };
 const sub = (object) => {
@@ -165,7 +182,7 @@ const sub = (object) => {
     let sub = false;
     const selectedProduct = getProductObject(object.id);
     // console.log(selectedProduct);
-    console.log(userCart.productArray);
+    //console.log(userCart.productArray);
     userCart.productArray.forEach((element) => {
         if (element.productObject.id == selectedProduct.id) {
             if (element.quantity > 1) {
@@ -175,7 +192,7 @@ const sub = (object) => {
                 element.productTotalCost = getReduced(
                     element.quantity * element.productObject.price
                 );
-                console.log(element.quantity, "decremented");
+                //    console.log(element.quantity, "decremented");
                 sub = true;
             } else if (element.quantity == 1) {
                 userCart.productArray = [
@@ -189,6 +206,7 @@ const sub = (object) => {
     });
 
     //   console.log("product array", userCart.productArray);
+    userCart.updateTotalCost();
     buildCart(userCart);
 };
 
@@ -237,16 +255,17 @@ getUserDetails(userId)
         fetchUserObject = {...response.userResponseJson };
         fetchUserCart = {...response.userCartResponseJson };
         setName();
-        console.log("user", response.userResponseJson); // create user object
-        console.log("cart", response.userCartResponseJson); // create cart object
+        buildUser();
+        // console.log("user", response.userResponseJson); // create user object
+        // console.log("cart", response.userCartResponseJson); // create cart object
         return response.userCartResponseJson;
     })
     .then((response) => {
         getProductDetails(response.products)
             .then((productObjectArray) => {
-                console.log(productObjectArray); // create cart object with products
+                //    console.log(productObjectArray); // create cart object with products
                 userCart = new cart(fetchUserCart.id, productObjectArray);
-                console.log("userCart", userCart);
+                //    console.log("userCart", userCart);
                 buildCart(userCart);
             })
             .catch((err) => console.log(err));
@@ -254,7 +273,7 @@ getUserDetails(userId)
     .catch((err) => console.log(err));
 
 const buildProducts = (products) => {
-    console.log("building products");
+    //console.log("building products");
     sectionProducts.innerHTML = "";
     products.forEach((product) => {
         const content = `
@@ -267,18 +286,16 @@ const buildProducts = (products) => {
                     <div class="img product-item">
                         <img src="${product.image}" alt="">
                     </div>
-
                     <div class="rate product-item">Rate - ${product.rating.rate}</div>
                     <div class="count product-item">Count -  ${product.rating.count}</div>
                     <div class="add-button">
-               Add to cart
-            </div>
+                    Add to cart
+                    </div>
                 `;
 
         const div = document.createElement("div");
         div.className = "single-products";
         div.setAttribute("id", product.id);
-
         div.innerHTML = content;
         sectionProducts.appendChild(div);
     });
@@ -289,42 +306,82 @@ getProducts().then((products) => {
 });
 
 // <------- event listners ----------->
-/* closeCart.addEventListener("click", () => {
-    //CLOSE CART
-    console.log("cart close");
-    document.body.style.zIndex = "10";
-    cardContainer.style.zIndex = "-10";
-    middle.style.zIndex = "-10";
+const toggleOverlay = () => {
+    const overlay = document.querySelector("#overlay");
+    overlay.style.height = `${document.body.scrollHeight}px`;
+    overlay.classList.toggle("overlay");
+};
+cartLogo.addEventListener("click", (e) => {
+    e.preventDefault();
+    cartContainer.style.transform = `translateX(0px)`;
+    toggleOverlay();
 });
-
-cartButton.addEventListener("click", () => {
-    //OPEN CART
-
-    console.log("cart open");
-    cardContainer.style.zIndex = "10";
-    middle.style.zIndex = "5";
+closeCart.addEventListener("click", () => {
+    cartContainer.style.transform = `translateX(1000px)`;
+    toggleOverlay();
 });
-*/
-
+cartContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("plus"))
+        add(e.target.parentElement.parentElement.parentElement);
+    if (e.target.classList.contains("subract"))
+        sub(e.target.parentElement.parentElement.parentElement);
+    //userCart.updateTotalCost();
+});
 products.addEventListener("click", (e) => {
-    console.log(e.target);
-    if (e.target.className == "add-button") {
+    if (e.target.classList.contains("add-button")) {
         add(e.target.parentElement);
+        // userCart.updateTotalCost();
     }
-    if (e.target.className == "subract") {
-        sub(e.target.parentElement.parentElement);
-    }
-    userCart.updateTotalCost();
-    //   console.log(userCart.totalCost);
 });
 
 dropdown.addEventListener("change", () => {
     sort(dropdown.value);
 });
 
-searchInput.addEventListener("keyup", search); //TODO: CHANGE this function like sorting event
+searchInput.addEventListener("keyup", search); //CHANGE this function like sorting event
 
-user.addEventListener("click", () => {
-    console.log(fetchUserObject);
+userButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    userDetails.style.transform = `translateX(0px)`;
+    toggleOverlay();
 });
-//TODO: add total cart cost to cart object in html
+
+closeUser.addEventListener("click", () => {
+    console.log("close user");
+    userDetails.style.transform = `translateX(-1000px)`;
+    toggleOverlay();
+});
+
+//add total cart cost to cart object in html
+
+const buildUser = () => {
+    const content = `
+    <div class="name">
+            Name:
+            <span class="first-name">${fetchUserObject.name.firstname}</span>
+            <span class="last-name">${fetchUserObject.name.lastname}</span>
+        </div>
+        <div class="email">
+            Email:
+            <span>${fetchUserObject.email}</span>
+        </div>
+        <div class="phone">
+            Mobile Number:
+            <span>${fetchUserObject.phone}</span>
+        </div>
+        <div class="address">
+            Address
+            <div class="street">Street:
+                <span>${fetchUserObject.address.street}</span>
+            </div>
+            <div class="city">City:
+                <span>${fetchUserObject.address.city}</span>
+            </div>
+            <div class="zipcode">Zipcode:
+                <span>${fetchUserObject.address.zipcode}</span>
+            </div>
+        </div>`;
+    const div = document.createElement("div");
+    div.innerHTML = content;
+    userDetails.append(div);
+};

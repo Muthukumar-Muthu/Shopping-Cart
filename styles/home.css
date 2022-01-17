@@ -15,6 +15,12 @@ body {
     font-family: "Montserrat", sans-serif;
     color: black;
     transition: all 0.2s linear;
+    overflow-x: hidden;
+}
+
+::selection {
+    background-color: none;
+    color: none;
 }
 
 a {
@@ -22,12 +28,12 @@ a {
 }
 
 a,
-.user {
+div.user {
     font-weight: bolder;
 }
 
 a,
-.user {
+div.user {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 1.8rem;
@@ -37,17 +43,75 @@ a,
 }
 
 a:hover,
-.user:hover {
+div.user:hover {
     color: rgb(185, 179, 179);
 }
 
 a:active,
-.user:active {
+div.user:active {
     color: grey;
 }
 
+aside.user {
+    background-color: white;
+    /* padding: 1rem; */
+    display: flex;
+    flex-direction: column;
+    font-size: xx-large;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    transition: transform 0.2s linear;
+    transform: translateX(-1000px);
+    z-index: 20;
+    height: 100%;
+    margin-inline: 10px;
+    border-radius: 10px;
+}
+
+.title {
+    display: grid;
+    place-items: center;
+}
+
+aside.user .name {
+    text-transform: capitalize;
+}
+
+aside.user>div>* {
+    padding: 1rem;
+}
+
+.close-user {
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    color: rgb(98, 37, 240);
+}
+
+.close-user i {
+    margin: 1rem 0.5rem;
+}
+
+aside.user>* {
+    padding: 1rem;
+}
+
+aside.user span {
+    font-weight: bolder;
+}
+
+.address::after,
+.address::before {
+    display: block;
+    width: 100%;
+    content: "";
+    border: thick solid red;
+}
+
 header {
-    background-color: rgba(56, 32, 4, 0.8);
+    background-color: #f9f871;
     width: 100%;
     height: 10vh;
     padding: 5px;
@@ -66,7 +130,7 @@ header {
 }
 
 .logo>span:first-child {
-    color: rgb(131, 109, 94);
+    color: #3b283c;
 }
 
 .logo>span:last-child {
@@ -79,7 +143,7 @@ section.sort {
 
 .sort {
     font-size: 1.5rem;
-    background-color: blanchedalmond;
+    background-color: #ca7163;
 }
 
 #name {
@@ -115,6 +179,7 @@ section.sort {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    background-color: #4bbc8e;
     /* background-color: burlywood; */
 }
 
@@ -189,18 +254,18 @@ img {
     grid-area: price;
 }
 
-.add-button {
+div.add-button {
     grid-area: add;
     cursor: pointer;
     background-color: grey;
     width: 100%;
 }
 
-.add-button:hover {
+div.add-button:hover {
     background-color: rgb(185, 185, 185);
 }
 
-.add-button:active {
+div.add-button:active {
     background-color: rgb(233, 227, 227);
 }
 
@@ -216,51 +281,143 @@ img {
     grid-area: cateogry;
 }
 
-.cart-container {
-    background-color: rgb(255, 1, 1);
-    margin-block: 10px;
-    padding: 10px;
-    text-align: center;
-    display: grid;
-    place-items: center;
-}
-
-
-/* cart */
-
-.close {}
-
-.cart-container .title {
-    padding: 5px;
-}
-
 .cart-products {
     display: flex;
     flex-direction: column;
-    background-color: lightskyblue;
-    padding: 20px;
+}
+
+#cart-title {
+    display: flex;
+    flex-direction: column;
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+#cart-title .title {
+    display: flex;
+    justify-content: center;
+    padding-block: 1rem;
 }
 
 .single-cart-product {
     display: grid;
-    grid-template-areas: "cartimage carttitle" "cartimage cartquantity" "cartimage cartcost";
-    margin: 5px;
+    grid-template-areas: "carttitle carttitle" "cartimage cartquantity" "cartimage cartcost";
+    margin-block: 1rem;
+}
+
+.single-cart-product>* {
+    padding: 8px 5px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin: 2px;
+    font-size: medium;
+    background-color: white;
+    transition: background-color 0.2s linear;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+}
+
+.close {
+    font-size: xx-large;
+    padding: 1em 0 0 1em;
+    cursor: pointer;
+}
+
+.cart-container {
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: transform 0.2s linear;
+    transform: translateX(1000px);
+    z-index: 20;
+    width: 686px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: white;
+}
+
+#overlay {
+    transition: background-color 0.1s linear;
+}
+
+.overlay {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(180, 200, 224, 0.95);
 }
 
 .single-cart-product .img {
     grid-area: cartimage;
+    min-height: 15rem;
 }
 
 .single-cart-product .title {
     grid-area: carttitle;
+    font-weight: bold;
 }
 
 .single-cart-product .quantity {
     grid-area: cartquantity;
+    display: grid;
+    place-items: center;
+}
+
+.single-cart-product .quantity span {
+    padding-block: 1rem;
+}
+
+.single-cart-product .quantity i {
+    cursor: pointer;
+    transition: all 0.2s linear;
+    padding: 0.5rem;
+}
+
+.quantity i:hover,
+.quantity i:focus {
+    background-color: grey;
+}
+
+.quantity i:active {
+    background-color: rgb(23, 24, 24);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Firefox */
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"] {
+    padding: 1rem;
+    width: 50px;
+    border-radius: 10px;
+    border: thin solid;
 }
 
 .single-cart-product .total-cost {
     grid-area: cartcost;
+}
+
+#total-cost {
+    display: grid;
+    place-items: center;
+    font-size: xx-large;
+    font-weight: bolder;
+    padding-block: 1rem;
 }
 
 @media (max-width: 650px) and (min-width: 551px) {
@@ -270,6 +427,15 @@ img {
     }
     .logo {
         letter-spacing: 5px;
+    }
+}
+
+@media (max-width: 700px) {
+    .cart-container {
+        width: 90%;
+        min-width: 0;
+        display: grid;
+        place-items: center;
     }
 }
 
@@ -312,18 +478,27 @@ img {
     .single-products>* {
         padding-inline: 1px;
     }
-    .products {
-        border: solid;
+    .products,
+    .cart-products {
+        /* border: solid; */
         padding: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
-    .single-products {
+    .single-products,
+    .single-cart-product {
         display: flex;
         flex-direction: column;
         justify-content: center;
         width: 90%;
+    }
+    #total-cost {
+        font-size: larger;
+    }
+    aside.user * {
+        font-size: smaller;
+        padding: 2px;
     }
 }
