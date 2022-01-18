@@ -360,6 +360,7 @@ closeUser.addEventListener("click", () => {
 //add total cart cost to cart object in html
 
 const buildUser = () => {
+    document.querySelector(".remove").remove();
     const content = `
     <div class="name">
             Name:
