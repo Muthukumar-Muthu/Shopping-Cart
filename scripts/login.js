@@ -9,7 +9,6 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     validate(username.value, password.value).then((value) => {
         if (value == false) {
-            console.log("no user object found");
             notification.style.color = "red";
             notification.innerHTML = "User Not found";
         } else {
